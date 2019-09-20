@@ -27,7 +27,10 @@ module Fastlane
             command += "-s #{params[:sourcemap_output]} "
           end
           if params[:private_key_path]
-            command += "-privateKeyPath #{params[:private_key_path]}"
+            command += "--privateKeyPath #{params[:private_key_path]} "
+          end
+          if params[:plist_file]
+            command += "--plistFile #{params[:private_key_path]} "
           end
           if params[:dry_run]
             UI.message("Dry run!".red + " Would have run: " + command + "\n")
@@ -119,7 +122,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :sourcemap_output,
                                       is_string: true,
                                       optional: true,
-                                      description: "Specifies path to write sourcemap to")
+                                      description: "Specifies path to write sourcemap to"),
+          FastlaneCore::ConfigItem.new(key: :plist_file,
+                                       is_string: true,
+                                       optional: true,
+                                       description: "Plist file for iOS")
         ]
       end
 
