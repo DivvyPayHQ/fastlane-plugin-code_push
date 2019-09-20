@@ -30,7 +30,7 @@ module Fastlane
             command += "--privateKeyPath #{params[:private_key_path]} "
           end
           if params[:plist_file]
-            command += "--plistFile #{params[:private_key_path]} "
+            command += "--plistFile #{params[:plistFile]} "
           end
           if params[:dry_run]
             UI.message("Dry run!".red + " Would have run: " + command + "\n")
