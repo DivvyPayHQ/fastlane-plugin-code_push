@@ -2,19 +2,23 @@ module Fastlane
   module Helper
     class CodePushLoginHelper
       def self.log_in(access_key, server_url="")
-        Action.sh("code-push login --accessKey #{access_key} #{server_url}", print_command: false)
-      rescue
-        UI.user_error!("something went wrong during login with access key #{access_key} and server url #{server_url}")
+        begin
+          unless is_logged_in()
+            Action.sh("appcenter login --token #{access_key} #{server_url}", print_command: false)
+          end        
+        rescue
+          UI.user_error!("something went wrong during login with token #{access_key} and server url #{server_url}")
+        end
       end
+
       def self.log_out
-        Action.sh("code-push logout")
-      rescue
+        Action.sh("appcenter logout")
       end
 
       def self.is_logged_in
         value = true
         begin
-          Action.sh("code-push whoami", false)
+          Action.sh("appcenter profile list", false)
         rescue
           value = false
         end

@@ -3,8 +3,8 @@ module Fastlane
     class CodePushReleaseReactAction < Action
       def self.run(params)
         Dir.chdir "#{params[:execution_dir_path]}" do
-          command = "code-push release-react #{params[:app_name]} #{params[:platform]} -d #{params[:deployment]} "\
-            "--des \"#{params[:description]}\" "
+          command = "appcenter codepush release-react --app #{params[:app_name]} --deployment-name #{params[:deployment]} "\
+            "--description \"#{params[:description]}\" "
           if params[:mandatory]
             command += "-m "
           end
@@ -15,7 +15,7 @@ module Fastlane
             command += "-x "
           end
           if params[:no_duplicate_release_error]
-            command += "--noDuplicateReleaseError "
+            command += "--disable-duplicate-release-error "
           end
           if params[:bundle_name]
             command += "-b #{params[:bundle_name]} "
@@ -27,10 +27,10 @@ module Fastlane
             command += "-s #{params[:sourcemap_output]} "
           end
           if params[:private_key_path]
-            command += "--privateKeyPath #{params[:private_key_path]} "
+            command += "-k #{params[:private_key_path]} "
           end
           if params[:plist_file]
-            command += "--plistFile #{params[:plist_file]} "
+            command += "-p #{params[:plist_file]} "
           end
           if params[:dry_run]
             UI.message("Dry run!".red + " Would have run: " + command + "\n")
